@@ -17,7 +17,7 @@ struct song_node * randSong (struct song_node *list);
 struct song_node * removeNode (struct song_node *node);
 struct song_node * freeList (struct song_node *list);
 
-void printList (struct song_node *list) {
+void printList (struct node *list) {
   int count = 0;
   while (list) {
     printf("%d : %d\n", count++, (*list).num);
@@ -25,8 +25,8 @@ void printList (struct song_node *list) {
   }
 }
 
-struct song_node * insertFront (struct song_node *list, int data) {
-  struct song_node *insert = (struct song_node *) malloc(sizeof(struct song_node));
+struct node * insertFront (struct node *list, int data) {
+  struct node *insert = (struct node *) malloc(sizeof(struct node));
   (*insert).num = data;
   (*insert).next = list;
   return insert;
@@ -45,11 +45,11 @@ struct song_node * insertNode (struct song_node *list, char[] nombre, char[] art
   insert->next = after;
 }
 
-struct song_node * freeList (struct song_node *list) {
-  struct song_node *front = list;
+struct node * freeList (struct node *list) {
+  struct node *front = list;
   while (list) {
     
-    struct song_node *remove = list;
+    struct node *remove = list;
     list = (*list).next;
     free(remove);
   }
