@@ -25,18 +25,24 @@ struct node * addSong(struct song_node[] musicLib, char[] song, char[] artist){
   insertNode(list, song, artist);
 }
 
-struct node * searchSong(struct song_node[] muiscLib, char[] song, char[] artist){
+struct node * searchSong(struct song_node[] musicLib, char[] song, char[] artist){
   int tableNum = charToNum(artist[0]);
   struct song_node* list = musicLib[tableNum];
   //search the song
   //while the name doesn't match and there is a next song...
-  while((*list).name != song && (*list).next){
+  while((*list).name != song && list){
     //go onto the next
     list = (*list).next;
   }
-  if ((*list).name == song){
-    return list;
-  } else {
-    return null;
-  }
+  return list;
+}
+
+int main(){
+  struct song_node musicLib[26];
+  addSong(musicLib, "whatever it takes", "imagine dragons");
+  addSong(musicLib, "the man who can't be moved", "the script");
+
+  while (songListwefasdfsedf
+  printf("successfully added %s by %s", song, artist);
+  searchSong(musicLib, "whatever it takes", "imagine dragons");
 }
