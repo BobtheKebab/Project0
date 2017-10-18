@@ -8,31 +8,35 @@ struct song_node{
   struct song_node *next;
 };
 
-struct song_node * insertFront (struct song_node *list, char[] nombre, char[] arte);
-struct song_node * insertNode (struct song_node *list, char[] nombre, char[] arte);
+struct song_node * insertFront (struct song_node *list, char, char);
+struct song_node * insertNode (struct song_node *list, char *, char *);
 void printList (struct song_node *list);
-struct song_node * searchSong (struct song_node *list, char[] artist, char[] song);
-struct song_node * searchArtist (struct song_node *list, char[] artist);
+struct song_node * searchSong (struct song_node *list, char *, char *);
+struct song_node * searchArtist (struct song_node *list, char *);
 struct song_node * randSong (struct song_node *list);
 struct song_node * removeNode (struct song_node *node);
 struct song_node * freeList (struct song_node *list);
 
 void printList (struct song_node *list) {
   int count = 0;
+  printf("%s | ", "PLACEHOLDER");
   while (list) {
-    printf("%d : %d\n", count++, (*list).num);
+    printf("%s : %s | ", (*list).artist, (*list).name);
+    count++;
     list = (*list).next;
   }
+  printf("\n");
 }
 
-struct song_node * insertFront (struct song_node *list, int data) {
+struct song_node * insertFront (struct song_node *list, char nombre[], char arte[]) {
   struct song_node *insert = (struct song_node *) malloc(sizeof(struct song_node));
-  (*insert).num = data;
+  (*insert).name = nombre;
+  (*insert).artist = arte;
   (*insert).next = list;
   return insert;
 }
 
-struct song_node * insertNode (struct song_node *list, char[] nombre, char[] arte) {
+struct song_node * insertNode (struct song_node *list, char nombre[], char arte[]) {
   struct song_node *insert = (struct song_node *) malloc(sizeof(struct song_node));
   (*insert).name = nombre;
   (*insert).artist = arte;
