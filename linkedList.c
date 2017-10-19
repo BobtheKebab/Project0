@@ -72,6 +72,7 @@ struct song_node * removeNode (struct song_node *list, struct song_node *node) {
   return newFront;
 }
 
+/*
 int charToNum(char in){
   char ALPHABET[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   char alphabet[] = "abcdefghijklmnopqrstuvwxyz";
@@ -84,13 +85,13 @@ int charToNum(char in){
   return counter;
 }
 
-struct node * addSong(struct song_node[] musicLib, char[] song, char[] artist){
+struct node * addSong(struct song_node *musicLib, char song[], char artist[]){
   int tableNum = charToNum( artist[0]);
   struct song_node* list = musicLib[tableNum];
   insertNode(list, song, artist);
 }
 
-struct node * searchSong(struct song_node[] musicLib, char[] song, char[] artist){
+struct node * searchSong(struct song_node *musicLib, char song[], char artist[]){
   int tableNum = charToNum(artist[0]);
   struct song_node* list = musicLib[tableNum];
   //search the song
@@ -101,7 +102,20 @@ struct node * searchSong(struct song_node[] musicLib, char[] song, char[] artist
   }
   return list;
 }
+*/
 
+struct song_node * randSong (struct song_node *list) {
+  int count = 0;
+  struct song_node *altList = list;
+  while (altList++) {
+    count++;
+  }
+  int target = rand() % count;
+  while (target-- > 0) {
+    list = list->next;
+  }
+  return list;
+}
 
 struct song_node * freeList (struct song_node *list) {
   struct song_node *front = list;
@@ -119,9 +133,11 @@ int main () {
   struct song_node *list = 0;
   list = insertFront(list, "Slippery", "Migos");
   list = insertFront(list, "All Me", "Drake");
-  list = removeNode(list, list->next);
+  //list = removeNode(list, list->next);
   printList(list);
-  printList(insertNode(list, "Aacrifices", "Big Sean"));
+  printList(insertNode(list, "Sacrifices", "Big Sean"));
+  struct song_node *rand = randSong(list);
+  printList(rand);
   
   return 0;
 }
