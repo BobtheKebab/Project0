@@ -72,6 +72,37 @@ struct song_node * removeNode (struct song_node *list, struct song_node *node) {
   return newFront;
 }
 
+int charToNum(char in){
+  char ALPHABET[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  char alphabet[] = "abcdefghijklmnopqrstuvwxyz";
+
+  int counter = 0;
+  //stop when: counter == 26 or letter found
+  while(in != ALPHABET[counter] && in != alphabet[counter] && counter != 26){
+    counter ++;
+  }
+  return counter;
+}
+
+struct node * addSong(struct song_node[] musicLib, char[] song, char[] artist){
+  int tableNum = charToNum( artist[0]);
+  struct song_node* list = musicLib[tableNum];
+  insertNode(list, song, artist);
+}
+
+struct node * searchSong(struct song_node[] musicLib, char[] song, char[] artist){
+  int tableNum = charToNum(artist[0]);
+  struct song_node* list = musicLib[tableNum];
+  //search the song
+  //while the name doesn't match and there is a next song...
+  while((*list).name != song && list){
+    //go onto the next
+    list = (*list).next;
+  }
+  return list;
+}
+
+
 struct song_node * freeList (struct song_node *list) {
   struct song_node *front = list;
   while (list) {
