@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 struct song_node{ 
   char name[256];
@@ -19,7 +20,6 @@ struct song_node * freeList (struct song_node *list);
 
 void printList (struct song_node *list) {
   int count = 0;
-  printf("%s | ", "PLACEHOLDER");
   while (list) {
     printf("%s : %s | ", (*list).artist, (*list).name);
     count++;
@@ -104,14 +104,20 @@ struct node * searchSong(struct song_node *musicLib, char song[], char artist[])
 }
 */
 
+// Questionable randomness
 struct song_node * randSong (struct song_node *list) {
   int count = 0;
   struct song_node *altList = list;
-  while (altList++) {
+  while (altList) {
     count++;
+    altList = altList->next;
   }
+  printf("Count: %d\n", count);
+  srand(time(0));
   int target = rand() % count;
-  while (target-- > 0) {
+  printf("Target: %d\n", target);
+  while (target > 0) {
+    target--;
     list = list->next;
   }
   return list;
@@ -133,6 +139,7 @@ int main () {
   struct song_node *list = 0;
   list = insertFront(list, "Slippery", "Migos");
   list = insertFront(list, "All Me", "Drake");
+  list = insertFront(list, "Till I Collapse", "Eminem");
   //list = removeNode(list, list->next);
   printList(list);
   printList(insertNode(list, "Sacrifices", "Big Sean"));
