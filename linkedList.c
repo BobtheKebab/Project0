@@ -191,8 +191,13 @@ void printLibrary (struct song_node * player[]) {
   printf("Terminated lib printing\n");
 }
 
-void shuffle (struct song_node *player[]) {
-
+void shuffle (struct song_node *player[], int numSongs) {
+  while (numSongs) {
+    srand(time(NULL));
+    int rand = rand() % 26;
+    printNode(randSong(player[numSongs]));
+    numSongs--;
+  }
 }
 
 void deleteSong (struct song_node *player[], char *nombre) {
