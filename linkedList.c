@@ -181,7 +181,7 @@ void printArtist (struct song_node *player[], char *arte) {
 
 void printLibrary (struct song_node * player[]) {
   int count = 0;
-  while (count < 27) {
+  while (count < 26) {
     if (player[count] != 0) {
       printf("[%c] | ", (char) (count + 65));
       printList(player[count]);
@@ -196,13 +196,25 @@ void shuffle (struct song_node *player[]) {
 }
 
 void deleteSong (struct song_node *player[], char *nombre) {
-  
+  int count = 0;
+  while (count < 26) {
+    struct song_node *current = player[0], *front = current;
+    while(current) {
+      if (current->name == nombre) {
+	removeNode(front, current);
+	break;
+      }
+      current = current->next;
+    }
+    count++;
+  }
 }
 
 void deleteAll (struct song_node *player[]) {
   int count = 0;
-  while (count < 27) {
+  while (count < 26) {
     freeList(player[count]);
+    count++;
   }
 }
 
