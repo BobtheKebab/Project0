@@ -18,7 +18,7 @@ struct song_node * searchSong (struct song_node *list, char *, char *);
 struct song_node * searchArtist (struct song_node *list, char *);
 struct song_node * randSong (struct song_node *list);
 //struct song_node * removeNode (struct song_node list, struct song_node *node);
-struct song_node * freeList (struct song_node *list);
+void freeList (struct song_node *list);
 
 void printList (struct song_node *list) {
   while (list) {
@@ -26,6 +26,10 @@ void printList (struct song_node *list) {
     list = list->next;
   }
   printf("\n");
+}
+
+void printNode (struct song_node *node) {
+  printf("%s : %s \n", list->artist, list->name);
 }
 
 struct song_node * insertFront (struct song_node *list, char nombre[], char arte[]) {
@@ -112,43 +116,58 @@ struct song_node * randSong (struct song_node *list) {
     count++;
     altList = altList->next;
   }
-  printf("Count: %d\n", count);
-  srand(time(0));
+  //printf("Count: %d\n", count);
+  srand(time(NULL));
   int target = rand() % count;
-  printf("Target: %d\n", target);
-  while (target > 0) {
+  //printf("Target: %d\n", target);
+  while (target) {
     target--;
     list = list->next;
   }
   return list;
 }
 
-struct song_node * freeList (struct song_node *list) {
-  struct song_node *front = list;
+void freeList (struct song_node *list) {
   while (list) {
-    
     struct song_node *remove = list;
-    list = (*list).next;
+    list = list->next;
     free(remove);
   }
-  return front;
 }
 
 // MUSIC PLAYER
 
 //struct song_node * table[27];
 
-void addNode (struct song_node *list, char *nombre, char *arte) {
-  
+void addNode (struct song_node *player[], char *nombre, char *arte) {
+  char target = arte[0];
+  int count = 0;
+  while (count + 97 - target) {
+    count++;
+  }
+  addNode(player[count], nombre, arte);
 }
 
 /*
 struct song_node * searchSongPlayer (struct song_node *list, char *nombre, char *arte) {
-  
+  char target = arte[0];
+  int count = 0;
+  while (count + 97 - target) {
+    count++;
+  }
 }
 
-struct song_node * searchArtist (struct song_node *list, char *arte) {
-  
+struct song_node * searchArtist (struct song_node *player[], char *arte) {
+  char target = arte[0];
+  int count = 0;
+  while (count + 97 - target) {
+    count++;
+  }
+  struct song_node *node = player[count];
+  while (node) {
+    printNode(node);
+    node = node->next;
+  }
 }
 */
 
@@ -160,7 +179,7 @@ void printArtist (struct song_node *player[], char *arte) {
 
 }
 
-void printLibrary (struct song_node *player[]) {
+void printLibrary (struct song_node * player[]) {
   int count = 0;
   while (count < 27) {
     if (player[count] != 0) {
@@ -191,6 +210,7 @@ void deleteAll (struct song_node *player[]) {
 
 int main () {
 
+  /*
   struct song_node *list = 0;
   list = insertFront(list, "Till I Collapse", "Eminem");
   list = insertFront(list, "Slippery", "Migos");
@@ -210,6 +230,47 @@ int main () {
   table[0] = list;
   printLibrary(table);
   printf("The function call should be done now\n");
+  */
+
+  printf("SONG NODE TESTS\n");
+  printf("----------------------------------------------------\n");
+  printf("Test insertFront (and printList):\n");
+  struct song_node *list = 0;
+  list = insertFront(list, "till i collapse", "eminem");
+  list = insertFront(list, "slippery", "migos");
+  list = insertFront(list, "all me", "drake");
+  printList(list);
+  printf("----------------------------------------------------\n");
+  printf("Test addNode:\n");
+  list = insertNode(list, "sacrifices", "big sean");
+  printList(list);
+  printf("----------------------------------------------------\n");
+  printf("Test removeNode:\n");
+  list = removeNode(list, list);
+  printList(list);
+  printf("----------------------------------------------------\n");
+  list = insertFront(list, "all me", "drake");
+  printList(list);
+  printf("----------------------------------------------------\n");
+  printf("Test randSong\n");
+  printList(randSong(list));
+  printList(randSong(list));
+  printList(randSong(list));
+  printList(randSong(list));
+  printf("----------------------------------------------------\n");
+
+  printf("----------------------------------------------------\n");
+
+  printf("----------------------------------------------------\n");
+
+  printf("----------------------------------------------------\n");
+
+  printf("----------------------------------------------------\n");
+  printf("Test freeList:\n");
+  freeList(list);
+  printf("It was freed, trust us\n");
+  printf("If we print the list again theres a good chance of segfault\n");
+  printf("----------------------------------------------------\n");
   
   return 0;
 }
