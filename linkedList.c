@@ -3,6 +3,8 @@
 #include <string.h>
 #include <time.h>
 
+// LINKED LIST
+
 struct song_node{ 
   char name[256];
   char artist[256];
@@ -19,11 +21,9 @@ struct song_node * randSong (struct song_node *list);
 struct song_node * freeList (struct song_node *list);
 
 void printList (struct song_node *list) {
-  int count = 0;
   while (list) {
-    printf("%s : %s | ", (*list).artist, (*list).name);
-    count++;
-    list = (*list).next;
+    printf("%s : %s | ", list->artist, list->name);
+    list = list->next;
   }
   printf("\n");
 }
@@ -134,17 +134,82 @@ struct song_node * freeList (struct song_node *list) {
   return front;
 }
 
+// MUSIC PLAYER
+
+//struct song_node * table[27];
+
+void addNode (struct song_node *list, char *nombre, char *arte) {
+  
+}
+
+/*
+struct song_node * searchSongPlayer (struct song_node *list, char *nombre, char *arte) {
+  
+}
+
+struct song_node * searchArtist (struct song_node *list, char *arte) {
+  
+}
+*/
+
+void printLetter (struct song_node *player[], char letter) {
+
+}
+
+void printArtist (struct song_node *player[], char *arte) {
+
+}
+
+void printLibrary (struct song_node *player[]) {
+  int count = 0;
+  while (count < 27) {
+    if (player[count] != 0) {
+      printf("[%c] | ", (char) (count + 65));
+      printList(player[count]);
+    }
+    count++;
+  }
+  printf("Terminated lib printing\n");
+}
+
+void shuffle (struct song_node *player[]) {
+
+}
+
+void deleteSong (struct song_node *player[], char *nombre) {
+  
+}
+
+void deleteAll (struct song_node *player[]) {
+  int count = 0;
+  while (count < 27) {
+    freeList(player[count]);
+  }
+}
+
+
+
 int main () {
 
   struct song_node *list = 0;
+  list = insertFront(list, "Till I Collapse", "Eminem");
   list = insertFront(list, "Slippery", "Migos");
   list = insertFront(list, "All Me", "Drake");
-  list = insertFront(list, "Till I Collapse", "Eminem");
   //list = removeNode(list, list->next);
   printList(list);
   printList(insertNode(list, "Sacrifices", "Big Sean"));
-  struct song_node *rand = randSong(list);
-  printList(rand);
+  //struct song_node *rand = randSong(list);
+  //printList(rand);
+
+  struct song_node * table[27];
+  int count = 0;
+  while (count++ < 27) {
+    table[count] = 0;
+  }
+  printf("Zeroed table\n");
+  table[0] = list;
+  printLibrary(table);
+  printf("The function call should be done now\n");
   
   return 0;
 }
