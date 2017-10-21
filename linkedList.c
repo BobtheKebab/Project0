@@ -14,9 +14,9 @@ struct song_node{
 struct song_node * insertFront (struct song_node *list, char[], char[]);
 struct song_node * insertNode (struct song_node *list, char *, char *);
 void printList (struct song_node *list);
-struct song_node * searchSong (struct song_node *list, char *, char *);
-struct song_node * searchArtist (struct song_node *list, char *);
-struct song_node * randSong (struct song_node *list);
+struct song_node * searchSong(struct song_node *musicLib[], char song[], char artist[]);
+struct song_node * searchArtist(struct song_node *list, char *);
+struct song_node * randsong(struct song_node *list);
 //struct song_node * removeNode (struct song_node list, struct song_node *node);
 void freeList (struct song_node *list);
 
@@ -29,7 +29,7 @@ void printList (struct song_node *list) {
 }
 
 void printNode (struct song_node *node) {
-  printf("%s : %s \n", list->artist, list->name);
+  printf("%s : %s \n", node->artist, node->name);
 }
 
 struct song_node * insertFront (struct song_node *list, char nombre[], char arte[]) {
@@ -76,7 +76,7 @@ struct song_node * removeNode (struct song_node *list, struct song_node *node) {
   return newFront;
 }
 
-/*
+
 int charToNum(char in){
   char ALPHABET[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   char alphabet[] = "abcdefghijklmnopqrstuvwxyz";
@@ -89,13 +89,13 @@ int charToNum(char in){
   return counter;
 }
 
-struct node * addSong(struct song_node *musicLib, char song[], char artist[]){
+struct node * addSong(struct song_node *musicLib[], char song[], char artist[]){
   int tableNum = charToNum( artist[0]);
   struct song_node* list = musicLib[tableNum];
   insertNode(list, song, artist);
 }
 
-struct node * searchSong(struct song_node *musicLib, char song[], char artist[]){
+struct song_node * searchSong(struct song_node *musicLib[], char song[], char artist[]){
   int tableNum = charToNum(artist[0]);
   struct song_node* list = musicLib[tableNum];
   //search the song
@@ -106,7 +106,6 @@ struct node * searchSong(struct song_node *musicLib, char song[], char artist[])
   }
   return list;
 }
-*/
 
 // Questionable randomness
 struct song_node * randSong (struct song_node *list) {
@@ -137,49 +136,51 @@ void freeList (struct song_node *list) {
 
 // MUSIC PLAYER
 
-//struct song_node * table[27];
-
-void addNode (struct song_node *player[], char *nombre, char *arte) {
-  char target = arte[0];
-  int count = 0;
-  while (count + 97 - target) {
-    count++;
-  }
-  addNode(player[count], nombre, arte);
-}
+//struct song_node * table[26];
 
 /*
-struct song_node * searchSongPlayer (struct song_node *list, char *nombre, char *arte) {
+  void addNode (struct song_node *musicLib[], char *nombre, char *arte) {
   char target = arte[0];
   int count = 0;
   while (count + 97 - target) {
-    count++;
+  count++;
   }
-}
+  addNode(player[count], nombre, arte);
+  }
 
-struct song_node * searchArtist (struct song_node *player[], char *arte) {
+
+  struct song_node * searchSongPlayer (struct song_node *musicLib[], char *nombre, char *arte) {
   char target = arte[0];
   int count = 0;
   while (count + 97 - target) {
-    count++;
+  count++;
+  }
+  }
+
+  struct song_node * searchArtist (struct song_node *musicLib[], char *arte) {
+  char target = arte[0];
+  int count = 0;
+  while (count + 97 - target) {
+  count++;
   }
   struct song_node *node = player[count];
   while (node) {
-    printNode(node);
-    node = node->next;
+  printNode(node);
+  node = node->next;
   }
-}
+  }
 */
 
 void printLetter (struct song_node *player[], char letter) {
 
 }
 
-void printArtist (struct song_node *player[], char *arte) {
-
+void printArtist (struct song_node *player[], char arte[]) {
+  charToNum(arte[1]);
 }
 
 void printLibrary (struct song_node * player[]) {
+  printf("hi");
   int count = 0;
   while (count < 26) {
     if (player[count] != 0) {
@@ -192,9 +193,10 @@ void printLibrary (struct song_node * player[]) {
 }
 
 void shuffle (struct song_node *player[], int numSongs) {
+  srand(time(NULL));
   while (numSongs) {
-    srand(time(NULL));
-    int rand = rand() % 26;
+    //apparently calling the variable rand fucks with C...
+    int rng = rand();
     printNode(randSong(player[numSongs]));
     numSongs--;
   }
@@ -228,25 +230,25 @@ void deleteAll (struct song_node *player[]) {
 int main () {
 
   /*
-  struct song_node *list = 0;
-  list = insertFront(list, "Till I Collapse", "Eminem");
-  list = insertFront(list, "Slippery", "Migos");
-  list = insertFront(list, "All Me", "Drake");
-  //list = removeNode(list, list->next);
-  printList(list);
-  printList(insertNode(list, "Sacrifices", "Big Sean"));
-  //struct song_node *rand = randSong(list);
-  //printList(rand);
+    struct song_node *list = 0;
+    list = insertFront(list, "Till I Collapse", "Eminem");
+    list = insertFront(list, "Slippery", "Migos");
+    list = insertFront(list, "All Me", "Drake");
+    //list = removeNode(list, list->next);
+    printList(list);
+    printList(insertNode(list, "Sacrifices", "Big Sean"));
+    //struct song_node *rand = randSong(list);
+    //printList(rand);
 
-  struct song_node * table[27];
-  int count = 0;
-  while (count++ < 27) {
+    struct song_node * table[27];
+    int count = 0;
+    while (count++ < 27) {
     table[count] = 0;
-  }
-  printf("Zeroed table\n");
-  table[0] = list;
-  printLibrary(table);
-  printf("The function call should be done now\n");
+    }
+    printf("Zeroed table\n");
+    table[0] = list;
+    printLibrary(table);
+    printf("The function call should be done now\n");
   */
 
   printf("SONG NODE TESTS\n");
@@ -288,6 +290,16 @@ int main () {
   printf("It was freed, trust us\n");
   printf("If we print the list again theres a good chance of segfault\n");
   printf("----------------------------------------------------\n");
+  
+  
+  printf("\n\n----------------------------------------------------\n");
+  printf("MUSIC LIBRARY TESTS\n");
+  printf("-----------------------------------------------------\n");
+  printf("Initiating music library...\n");
+  struct song_node *musicLibrary[26];
+  printf("Testing addSong...\n");
+  addSong(musicLibrary,"fast lane","bad meets evil");
+  //printLibrary(musicLibrary);
   
   return 0;
 }
